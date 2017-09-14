@@ -1,5 +1,25 @@
-<div class="jumbotron text-center">
-  <h1>Houses</h1>
-
-  <p>{{ tagline }}</p>
+<div class="container">
+  <div class="section">
+    <div class="row">
+      <h1>Houses</h1>
+      <h4>{{status}}</h4>
+    </div>
+  </div>
+  <div class="section">
+    <div class="row">
+      <div class="col s12 m4" ng-repeat="house in houses">
+        <div class="icon-block">
+          <h2 class="center light-blue-text"><i class="material-icons">home</i></h2>
+          <h5>{{house.name}}</h5>
+          <p class="light">Owner: {{house.owner}}</p>
+          <p class="light">Address: {{house.addres}}</p>
+          <p class="light"><span ng-show="house.forSale">For Sale for: {{house.price}} Wei</span></p>
+          <div class="row">
+            <a href="/houses/{{house.id}}" id="download-button" class="btn-large waves-effect waves-light orange">View House</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br><br>
 </div>

@@ -12,6 +12,11 @@ angular.module('appRoutes', [])
         .when('/houses', {
           templateUrl: 'views/houses.html',
           controller: 'HouseController'
+        })
+
+        .when('/houses/:house_id', {
+          templateUrl: 'views/show.html',
+          controller: 'HouseController'
         });
 
       $locationProvider.html5Mode(true);

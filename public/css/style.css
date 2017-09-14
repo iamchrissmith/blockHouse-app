@@ -1,0 +1,10 @@
+#logo-container img {
+  height: 55px;
+  background: white;
+}
+
+@media only screen and (min-width: 601px) {
+  #logo-container img {
+    height: 63px;
+  } 
+}

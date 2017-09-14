@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+const router = express.Router();
 const bodyParser = require('body-parser');
 const methodOverride = require('method-override');
 const mongoose = require('mongoose');
@@ -21,7 +22,11 @@ app.use(methodOverride('X-HTTP-Method-Override'));
 
 app.use(express.static(__dirname + '/public'));
 
-require('./app/routes')(app);
+require('./app/routes')(router);
+
+router.use('/', express.static('app', {redirect:false}));
+
+app.use('/', router);
 
 app.listen(port);
 

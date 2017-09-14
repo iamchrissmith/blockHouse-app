@@ -1,37 +1,24 @@
-const House = require('./models/house');
+const path = require('path');
+const HouseController = require('./controllers/HouseController');
+const houseController = new HouseController;
 
-module.exports = function(app) {
-  app.get('/api/v1', (req, res) => {
-    res.json({message: 'API information'});
-  });
+module.exports = function(router) {
 
-  app.post('/api/v1/houses', (req, res) => {
-    const house = new House();
-    house.address = req.body.address;
-    house.name = req.body.name;
-    house.price = req.body.price;
-    house.forSale = req.body.forSale;
-    house.owner = req.body.owner;
-    
-    console.log(house);
-    house.save( err => {
-      if(err)
-        res.send(err);
+  router.route('/api/v1/houses')
+    .post( houseController.create )
+    .get( houseController.index );
 
-      res.json({message: 'House created!'});
+  router.route('/api/v1/houses/:house_id')
+    .get( houseController.show )
+    .put( houseController.update )
+    .delete( houseController.destroy );
+  
+  router.route('/')
+    .get( (req, res) => {
+      res.json({message: 'API information'});
     });
-  });
 
-  app.get('/api/v1/houses', (req, res) => {
-    House.find( (err, houses) => {
-      if (err)
-        res.send(err);
-
-      res.json(houses);
-    });
-  });
-
-  app.get('*', (req, res) => {
-    res.sendfile('./public/index.html');
+  router.get('*', (req, res) => {
+    res.sendfile(path.resolve('public/index.html'));
   });
 };
