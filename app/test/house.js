@@ -156,5 +156,24 @@ describe('Houses', () => {
       });
     });
   });
-  
+
+  describe('DELETE /api/v1/houses/:id', () => {
+    it('it should DELETE a house by id', done => {
+      const house = new House({
+        address: '0x000',
+        owner: '0x00'
+      });
+      house.save( (err, _house) => {
+        chai.request(server)
+          .delete(`/api/v1/houses/${_house.id}`)
+          .end( (err, res) => {
+            assert.equal(res.status, 200);
+            assert.isObject(res.body);
+            assert.property(res.body, 'message');
+            assert.equal(res.body.message, 'Successfully deleted');
+            done();
+          });
+      });
+    });
+  });
 });
