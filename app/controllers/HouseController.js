@@ -50,7 +50,7 @@ class HouseController {
         if(err)
           return res.send(err);
 
-        res.json({message: 'House updated!'});
+        res.json({message: 'House updated!', house});
       });
     });
   }

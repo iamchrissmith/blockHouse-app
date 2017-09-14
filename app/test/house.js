@@ -80,5 +80,81 @@ describe('Houses', () => {
         });
     });
   });
+
+  describe('GET /api/v1/houses/:id', () => {
+    it('it should GET a house by id', done => {
+      const house = new House({
+        address: '0x000',
+        owner: '0x00'
+      });
+      house.save( (err, _house) => {
+        chai.request(server)
+          .get(`/api/v1/houses/${_house.id}`)
+          .end( (err, res) => {
+            assert.equal(res.status, 200);
+            assert.isObject(res.body);
+            assert.property(res.body, 'address');
+            assert.equal(res.body.address, house.address);
+
+            assert.property(res.body, 'name');
+            assert.equal(res.body.name, '');
+
+            assert.property(res.body, 'price');
+            assert.equal(res.body.price, 0);
+
+            assert.property(res.body, 'forSale');
+            assert.isFalse(res.body.forSale);
+
+            assert.property(res.body, 'owner');
+            assert.equal(res.body.owner, house.owner);
+            done();
+          });
+      });
+    });
+  });
+
+  describe('PUT /api/v1/houses/:id', () => {
+    it('it should UPDATE a house by id', done => {
+      const house = new House({
+        address: '0x000',
+        owner: '0x00'
+      });
+      const newHouse = {
+        owner:'0x001',
+        price: 100,
+        forSale: true,
+        name: 'New Name'
+      };
+      house.save( (err, _house) => {
+        chai.request(server)
+          .put(`/api/v1/houses/${_house.id}`)
+          .send(newHouse)
+          .end( (err, res) => {
+            assert.equal(res.status, 200);
+            assert.isObject(res.body);
+            assert.property(res.body, 'message');
+            assert.equal(res.body.message, 'House updated!');
+
+            assert.property(res.body, 'house');
+
+            assert.property(res.body.house, 'address');
+            assert.equal(res.body.house.address, house.address);
+
+            assert.property(res.body.house, 'name');
+            assert.equal(res.body.house.name, newHouse.name);
+
+            assert.property(res.body.house, 'price');
+            assert.equal(res.body.house.price, newHouse.price);
+
+            assert.property(res.body.house, 'forSale');
+            assert.isTrue(res.body.house.forSale);
+
+            assert.property(res.body.house, 'owner');
+            assert.equal(res.body.house.owner, newHouse.owner);
+            done();
+          });
+      });
+    });
+  });
   
 });
