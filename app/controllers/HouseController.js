@@ -46,7 +46,12 @@ class HouseController {
       house.forSale = req.body.forSale;
       house.owner = req.body.owner;
 
-      res.json({message: 'House updated!'});
+      house.save( err => {
+        if(err)
+          res.send(err);
+
+        res.json({message: 'House updated!'});
+      });
     });
   }
 
