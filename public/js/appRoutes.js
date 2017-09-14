@@ -11,7 +11,7 @@ angular.module('appRoutes', [])
 
         .when('/houses', {
           templateUrl: 'views/houses.html',
-          controller: 'HouseController'
+          controller: 'HousesController'
         })
 
         .when('/houses/:house_id', {

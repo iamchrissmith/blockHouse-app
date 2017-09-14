@@ -1,2 +1,2 @@
 angular.module('blockHouses',
-  ['ngRoute', 'appRoutes', 'MainCtrl', 'HouseCtrl', 'HouseService']);
+  ['ngRoute', 'appRoutes', 'MainCtrl', 'HousesCtrl', 'HouseCtrl', 'HouseService']);

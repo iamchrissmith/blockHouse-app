@@ -1,0 +1,36 @@
+<div class="container">
+  <div class="section">
+    <div class="row">
+      <h4 ng-show="{{status}}">{{status}}</h4>
+      <div class="col s12 m6">
+        <div class="house-title" ng-show="{{house.name != ''}}">
+          <h1>{{house.name}}</h1>
+          <h3>{{house.address}}</h3>
+          <p>Owned by: {{house.owner}}</p>
+        </div>
+        <div class="house-title" ng-show="{{house.name == ''}}">
+          <h1>{{house.address}}</h1>
+          <p>Owned by: {{house.owner}}</p>
+        </div>
+        {{house.forSale}}
+        <div class="house-sale" ng-hide="{{!house.forSale}}">
+          <p>You can buy this house for {{house.price}} Wei.</p>
+        </div>
+      </div>
+      <div class="col s12 m6 house-sidebar">
+          <img src="https://placeimg.com/640/480/arch/grayscale" width="640" height="480"/>
+      </div>
+    </div>
+    <div class="row">
+      <h2>House History</h2>
+      <ul class="collection">
+        <li class="collection-item">
+          <span class="title">Sale</span>
+          <p>From: 0x1234<br/>
+            To: 04311
+          </p>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

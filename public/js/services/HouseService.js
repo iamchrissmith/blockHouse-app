@@ -1,26 +1,6 @@
 angular.module('HouseService', [])
-  .factory('Houses', ['$http', function($http) {
+  .factory('HouseService', ['$http', function($http) {
     const urlBase = 'api/v1/houses';
-
-    // this.get = () => {
-    //   return $http.get(`${urlBase}`);
-    // };
-
-    // this.create = () => {
-    //   return $http.post(`${urlBase}`, houseData);
-    // };
-
-    // this.show = (id) => {
-    //   return $http.get(`${urlBase}/${id}`);
-    // };
-
-    // this.update = (id) => {
-    //   return $http.put(`${urlBase}/${id}`, houseData);
-    // };
-
-    // this.delete = (id) => {
-    //   return $http.delete(`${urlBase}/${id}`);
-    // };
 
     return {
       get : () => {
@@ -31,8 +11,13 @@ angular.module('HouseService', [])
         return $http.post(urlBase, houseData);
       },
 
+      show : (id) => {
+        // return "success";
+        return $http.get(urlBase + "/" + id);
+      },
+
       delete : (id) => {
-        return $http.delete(urlBase + id);
+        return $http.delete(urlBase + "/" + id);
       }
     };
   }]);

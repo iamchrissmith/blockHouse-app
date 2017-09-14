@@ -1,16 +1,17 @@
 angular.module('HouseCtrl', [])
-  .controller('HouseController', function($scope, Houses) {
-    $scope.houses = [];
+  .controller('HouseController', function($scope, $routeParams, HouseService) {
+    $scope.house = {};
     $scope.status;
 
-    const getHouses = () => {
-      Houses.get()
+    const showHouse = () => {
+      HouseService.show($routeParams.house_id)
         .then( response => {
-          $scope.houses = response.data;
+          $scope.status = response.data;
+          $scope.house = response.data;
         }, err => {
           $scope.status = `Unable to load house data: ${err.message}`;
         });
     };
 
-    getHouses();
+    showHouse();
   });
