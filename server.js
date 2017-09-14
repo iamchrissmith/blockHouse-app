@@ -5,12 +5,11 @@ const bodyParser = require('body-parser');
 const methodOverride = require('method-override');
 const mongoose = require('mongoose');
 require('dotenv').config();
-
-const db = require('./config/db');
+const config = require('config');
 
 const port = process.env.PORT || 8080;
 
-mongoose.connect(db.url);
+mongoose.connect(config.DBHost);
 
 app.use(bodyParser.json());
 

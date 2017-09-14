@@ -12,7 +12,7 @@ class HouseController {
     
     house.save( err => {
       if(err)
-        res.send(err);
+        return res.send(err);
 
       res.json({message: 'House created!'});
     });
@@ -20,17 +20,17 @@ class HouseController {
 
   index (req, res) {
     House.find( (err, houses) => {
-        if (err)
-          res.send(err);
-  
-        res.json(houses);
-      });
+      if (err)
+        return res.send(err);
+
+      res.json(houses);
+    });
   }
 
   show (req, res) {
     House.findById(req.params.house_id, (err, house) => {
       if (err)
-        res.send(err);
+        return res.send(err);
 
       res.json(house);
     });
@@ -48,7 +48,7 @@ class HouseController {
 
       house.save( err => {
         if(err)
-          res.send(err);
+          return res.send(err);
 
         res.json({message: 'House updated!'});
       });
@@ -60,7 +60,7 @@ class HouseController {
       _id: req.params.house_id
     }, (err, house) => {
       if (err)
-        res.send(err);
+        return res.send(err);
 
       res.json({message: 'Successfully deleted'});
     });
