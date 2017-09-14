@@ -14,7 +14,7 @@ module.exports = function(app) {
     house.owner = req.body.owner;
     
     console.log(house);
-    house.create( err => {
+    house.save( err => {
       if(err)
         res.send(err);
 
