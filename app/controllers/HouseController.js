@@ -14,7 +14,7 @@ class HouseController {
       if(err)
         return res.send(err);
 
-      res.json({message: 'House created!'});
+      res.json({message: 'House created!', id: house._id});
     });
   }
 

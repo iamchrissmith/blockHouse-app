@@ -57,6 +57,7 @@ describe('Houses', () => {
           assert.isObject(res.body);
           assert.property(res.body, 'message');
           assert.equal(res.body.message, 'House created!');
+          assert.property(res.body, 'id');
           done();
         });
     });
