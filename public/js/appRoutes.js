@@ -14,6 +14,11 @@ angular.module('appRoutes', [])
           controller: 'HousesController'
         })
 
+        .when('/houses/new', {
+          templateUrl: 'views/create.html',
+          controller: 'CreateHouseController'
+        })
+
         .when('/houses/:house_id', {
           templateUrl: 'views/show.html',
           controller: 'HouseController'

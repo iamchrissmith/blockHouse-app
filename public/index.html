@@ -18,12 +18,14 @@
     <script src="libs/angular/angular.min.js"></script>
     <script src="libs/angular-route/angular-route.min.js"></script>
     <script src="libs/jquery/dist/jquery.min.js"></script>
+    <!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-materialize/0.2.2/angular-materialize.min.js"></script> -->
     <!-- Compiled and minified JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
 
     <!-- ANGULAR CUSTOM -->
     <script src="js/controllers/MainCtrl.js"></script>
     <script src="js/controllers/HousesCtrl.js"></script>
+    <script src="js/controllers/HouseCreateCtrl.js"></script>
     <script src="js/controllers/HouseCtrl.js"></script>
     <script src="js/services/HouseService.js"></script>
     <script src="js/appRoutes.js"></script>
@@ -31,7 +33,7 @@
 
  
  </head>
- <body ng-app="blockHouses" ng-controller="HouseController">
+ <body ng-app="BlockHouses" ng-controller="HouseController">
   <header>
     <nav class="grey darken-4" role="navigation">
       <div class="nav-wrapper container">
@@ -39,11 +41,13 @@
         <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
         <ul class="right hide-on-med-and-down">
           <li><a href="/houses">Houses</a></li>
+          <li><a href="/houses/new">New House</a></li>
         </ul>
       </div>
     </nav>
     <ul id="nav-mobile" class="side-nav">
         <li><a href="/houses">Houses</a></li>
+        <li><a href="/houses/new">New House</a></li>
     </ul>
   </header>
   
@@ -54,6 +58,9 @@
       $(function(){
 
         $('.button-collapse').sideNav();
+        setTimeout(function () {
+          $('select').material_select();
+        }, 200);
 
       }); // end of document ready
     })(jQuery); // end of jQuery name space

@@ -13,8 +13,9 @@
           <p>Owned by: {{house.owner}}</p>
         </div>
         {{house.forSale}}
-        <div class="house-sale" ng-hide="{{!house.forSale}}">
+        <div class="house-sale" ng-show="house.forSale">
           <p>You can buy this house for {{house.price}} Wei.</p>
+          <a class="waves-effect waves-light btn-large">Buy Now</a>
         </div>
       </div>
       <div class="col s12 m6 house-sidebar">
@@ -32,5 +33,6 @@
         </li>
       </ul>
     </div>
+    
   </div>
 </div>
