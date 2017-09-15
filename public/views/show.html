@@ -17,6 +17,9 @@
           <p>You can buy this house for {{house.price}} Wei.</p>
           <a class="waves-effect waves-light btn-large">Buy Now</a>
         </div>
+        <div class="house-edit"> <!-- todo: hide if not owner -->
+          <a class="waves-effect waves-light btn-large blue-grey" href="/houses/{{house._id}}/edit">Edit</a>
+        </div>
       </div>
       <div class="col s12 m6 house-sidebar">
           <img src="https://placeimg.com/640/480/arch/grayscale" width="640" height="480"/>
