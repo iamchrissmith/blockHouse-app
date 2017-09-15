@@ -19,6 +19,11 @@ angular.module('appRoutes', [])
           controller: 'CreateHouseController'
         })
 
+        .when('/houses/:house_id/edit', {
+          templateUrl: 'views/edit.html',
+          controller: 'EditHouseController'
+        })
+
         .when('/houses/:house_id', {
           templateUrl: 'views/show.html',
           controller: 'HouseController'

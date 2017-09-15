@@ -5,6 +5,7 @@ angular.module('BlockHouses',
     'MainCtrl', 
     'HousesCtrl',
     'HouseCreateCtrl', 
+    'HouseEditCtrl', 
     'HouseCtrl', 
     'HouseService'
   ]);

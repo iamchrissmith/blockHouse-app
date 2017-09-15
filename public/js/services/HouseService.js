@@ -12,8 +12,11 @@ angular.module('HouseService', [])
       },
 
       show : (id) => {
-        // return "success";
         return $http.get(urlBase + "/" + id);
+      },
+
+      edit : (houseData) => {
+        return $http.put(urlBase + "/" + houseData._id, houseData);
       },
 
       delete : (id) => {

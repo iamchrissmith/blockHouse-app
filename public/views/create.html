@@ -1,9 +1,14 @@
-
 <div class="row">
   <h1>Create a New House</h1>
 </div>
 <div class="row">
   <form class="col s12" ng-submit="createHouse()">
     <ng-include src="'/views/partials/form.house.html'"></ng-include>
+
+    <div class="row">
+      <div class="input-field col s12">
+        <input class="btn-large waves-effect waves-light red" type="submit" value="Create House">
+      </div>
+    </div>
   </form>
 </div>
