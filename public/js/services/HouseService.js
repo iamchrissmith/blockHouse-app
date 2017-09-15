@@ -7,7 +7,7 @@ angular.module('HouseService', [])
         return $http.get(urlBase);
       },
 
-      create : () => {
+      create : (houseData) => {
         return $http.post(urlBase, houseData);
       },
 
