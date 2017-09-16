@@ -31648,15 +31648,9 @@ angular.module('HouseEditCtrl', [])
 
     showHouse();
     
-    $scope.editHouse = () => {
+    $scope.updateHouseName = () => {
       console.log($scope.house);
-      HouseService.edit($scope.house)
-        .then( response => {
-          console.log(response.data);
-          $location.url(`/houses/${response.data.house._id}`);
-        }, err => {
-          $scope.status = `Unable to load house data: ${err.message}`;
-        });
+      saveHouseData();
     };
 
     const saveHouseData = () => {
@@ -31698,9 +31692,16 @@ angular.module('HouseEditCtrl', [])
             saveHouseData();   
           });
       }
-
-      
     };
+
+    $scope.transferOwnership = (newOwner) => {
+      const chainHouse = $rootScope.BlockHouse.at($scope.house.address);
+      chainHouse.changeTitleHolder(newOwner, {from:$rootScope.selectedAccount})
+      .then( tx => {
+        $scope.house.owner = newOwner;
+        saveHouseData();
+        })
+    }
   });
 
 /***/ }),

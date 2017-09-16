@@ -32,3 +32,9 @@
   width:auto;
   height:auto;
 }
+
+.edit-house > .row{
+  margin: 1.5em 0;
+  padding-top: 1.5em;
+  padding-bottom: 1.5em;
+}
