@@ -2,25 +2,28 @@
   <div class="section">
     <div class="row">
       <h4 ng-show="{{status}}">{{status}}</h4>
-      <div class="col s12 m6">
+      <div class="col s12 l6">
         <div class="house-title" ng-show="{{house.name != ''}}">
           <h1>{{house.name}}</h1>
-          <h3>{{house.address}}</h3>
-          <p>Owned by: {{house.owner}}</p>
+          <h1 class="truncate">{{house.address}}</h1>
+          <p>Owned by: <span class="true">{{house.owner}}</span></p>
         </div>
         <div class="house-title" ng-show="{{house.name == ''}}">
-          <h1>{{house.address}}</h1>
-          <p>Owned by: {{house.owner}}</p>
+          <h1 class="truncate">{{house.address}}</h1>
+          <p>Owned by: <span class="truncate">{{house.owner}}</span></p>
         </div>
         <div class="house-sale" ng-show="house.forSale">
-          <p>You can buy this house for {{house.price}} Wei.</p>
+          <p>You can buy this house for 
+            <span ng-show="selectedCurrency == 'wei'">{{house.price}} Wei.</span>
+            <span ng-show="selectedCurrency == 'ether'">{{house.priceInEth}} Ether.</span>
+          </p>
           <a class="waves-effect waves-light btn-large">Buy Now</a>
         </div>
         <div class="house-edit" ng-show="house.owner == selectedAccount">
           <a class="waves-effect waves-light btn-large blue-grey" href="/houses/{{house._id}}/edit">Edit</a>
         </div>
       </div>
-      <div class="col s12 m6 house-sidebar">
+      <div class="col s12 l6 house-sidebar">
           <img src="https://placeimg.com/640/480/arch/grayscale" width="640" height="480"/>
       </div>
     </div>
