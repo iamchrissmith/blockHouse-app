@@ -17,7 +17,7 @@
             <span ng-show="selectedCurrency == 'wei'">{{house.price}} Wei.</span>
             <span ng-hide="selectedCurrency == 'wei'">{{house.priceInEth}} Ether.</span>
           </p>
-          <a class="waves-effect waves-light btn-large">Buy Now</a>
+          <a ng-show="house.owner != selectedAccount" class="waves-effect waves-light btn-large">Buy Now</a>
         </div>
         <div class="house-edit" ng-show="house.owner == selectedAccount">
           <a class="waves-effect waves-light btn-large blue-grey" href="/houses/{{house._id}}/edit">Edit</a>
