@@ -80,11 +80,11 @@ angular.module('BlockHouses',
       $rootScope.contract.isAdmin($rootScope.selectedAccount, {from:$rootScope.selectedAccount})
       .then(_isAdmin => {
         $rootScope.isAdmin = _isAdmin;
-        updateBalance();
+        $rootScope.updateBalance();
       });
     };
 
-    const updateBalance = () => {
+    $rootScope.updateBalance = () => {
       web3.eth.getBalancePromise($rootScope.selectedAccount)
         .then ( _balance => {
           $rootScope.balance = _balance.toString(10);
