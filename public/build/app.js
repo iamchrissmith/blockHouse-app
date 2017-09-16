@@ -31627,12 +31627,15 @@ angular.module('HouseCreateCtrl', [])
 /***/ (function(module, exports) {
 
 angular.module('HouseEditCtrl', [])
-  .controller('EditHouseController', function($location, $scope, $routeParams, HouseService) {
+  .controller('EditHouseController', function($location, $scope, $routeParams, HouseService, $rootScope) {
     $scope.house = {};
 
     const showHouse = () => {
       HouseService.show($routeParams.house_id)
         .then( response => {
+          if ($rootScope.selectedAccount != response.data.owner) {
+            $location.url(`/houses/${$routeParams.house_id}`);
+          }
           $scope.house = response.data;
         }, err => {
           $scope.status = `Unable to load house data: ${err.message}`;
