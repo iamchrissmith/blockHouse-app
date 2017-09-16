@@ -23,14 +23,15 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
 
     <!-- ANGULAR CUSTOM -->
-    <script src="js/controllers/MainCtrl.js"></script>
+    <!-- <script src="js/controllers/MainCtrl.js"></script> -->
     <script src="js/controllers/HousesCtrl.js"></script>
     <script src="js/controllers/HouseCreateCtrl.js"></script>
     <script src="js/controllers/HouseEditCtrl.js"></script>
     <script src="js/controllers/HouseCtrl.js"></script>
     <script src="js/services/HouseService.js"></script>
     <script src="js/appRoutes.js"></script>
-    <script src="js/app.js"></script>
+    <script src="assets/app.js"></script>
+    <!-- <script src="js/app.js"></script> -->
 
  
  </head>
@@ -40,6 +41,7 @@
       <div class="nav-wrapper container">
         <a id="logo-container" href="/" class="brand-logo"><img src="./assets/blockhouses-logo.png" /></a>
         <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
+        {{account}}
         <ul class="right hide-on-med-and-down">
           <ng-include src="'/views/partials/navigation.html'"></ng-include>
         </ul>

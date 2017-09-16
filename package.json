@@ -23,7 +23,7 @@
     "mockgoose": "^7.3.3",
     "truffle": "^3.4.9",
     "truffle-solidity-loader": "^0.0.8",
-    "webpack": "^3.5.6",
+    "webpack": "^3.6.0",
     "webpack-dev-server": "^2.7.1"
   },
   "scripts": {

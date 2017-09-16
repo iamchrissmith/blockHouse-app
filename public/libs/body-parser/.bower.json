@@ -1,0 +1,14 @@
+{
+  "name": "body-parser",
+  "homepage": "https://github.com/expressjs/body-parser",
+  "version": "1.4.3",
+  "_release": "1.4.3",
+  "_resolution": {
+    "type": "version",
+    "tag": "1.4.3",
+    "commit": "103b4156f72b64325dd377422696f2b6ad4ef973"
+  },
+  "_source": "https://github.com/expressjs/body-parser.git",
+  "_target": "~1.4.2",
+  "_originalSource": "body-parser"
+}
