@@ -45,6 +45,10 @@ angular.module('BlockHouses',
     'HouseService'
   ])
   .run( ($rootScope) => {
+
+    $rootScope.BlockHouse = BlockHouse;
+    $rootScope.web3 = web3;
+
     BlockHub.deployed()
     .then( _instance => {
       $rootScope.contract = _instance;
