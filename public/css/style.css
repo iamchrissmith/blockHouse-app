@@ -14,8 +14,15 @@
   max-height: 100%;
 }
 
+#account-nav {
+  text-align:right;
+  line-height:32px;
+  height: 64px;
+}
+
 #account-nav li {
-  float:right;
+  display:block;
+  float:none;
 }
 
 #account-nav select {
@@ -23,4 +30,5 @@
   border: none;
   display:inline-block;
   width:auto;
+  height:auto;
 }

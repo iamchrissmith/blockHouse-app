@@ -16020,13 +16020,8 @@ angular.module('BlockHouses',
     'HouseEditCtrl', 
     'HouseCtrl', 
     'HouseService'
-  ]);
-
-  angular.module('MainCtrl',[])
-  .controller('MainController', function($rootScope) {
-
-    console.log("BlockHub: ", BlockHub);
-    
+  ])
+  .run( ($rootScope) => {
     BlockHub.deployed()
     .then( _instance => {
       $rootScope.contract = _instance;
@@ -16037,7 +16032,7 @@ angular.module('BlockHouses',
       $rootScope.$apply();
     });
 
-    // Work with the first account    
+    // Start with the first
     web3.eth.getAccountsPromise()
     .then(accounts => {
         if (accounts.length == 0) {
@@ -16045,10 +16040,39 @@ angular.module('BlockHouses',
         }
         $rootScope.accounts = accounts;
         console.log("Other Accounts: ", $rootScope.accounts);
-        $rootScope.selectedAccount = $rootScope.accounts[0];
-        console.log("ACCOUNT:", $rootScope.selectedAccount);
-        $rootScope.$apply();
-    }); 
+        $rootScope.changeAccount(accounts[0]);
+      });
+      
+    $rootScope.changeAccount = (address) => {
+      $rootScope.selectedAccount = address;
+      console.log("ACCOUNT:", $rootScope.selectedAccount);
+      setSelectedAccountDetails();
+    }
+
+    const setSelectedAccountDetails = () => {
+      $rootScope.contract.isAdmin($rootScope.selectedAccount, {from:$rootScope.selectedAccount})
+      .then(_isAdmin => {
+        $rootScope.isAdmin = _isAdmin;
+        updateBalance();
+      });
+    };
+
+    const updateBalance = () => {
+      web3.eth.getBalancePromise($rootScope.selectedAccount)
+        .then ( _balance => {
+          $rootScope.balance = _balance.toString(10);
+          $rootScope.balanceInEth = web3.fromWei($rootScope.balance, "ether");
+          $rootScope.selectedCurrency = 'ether';
+          $rootScope.$apply();
+        });
+    };
+  });
+
+  angular.module('MainCtrl',[])
+  .controller('MainController', function($rootScope) {
+
+    
+
   });
 
 /***/ }),

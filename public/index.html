@@ -18,7 +18,6 @@
     <script src="libs/angular/angular.min.js"></script>
     <script src="libs/angular-route/angular-route.min.js"></script>
     <script src="libs/jquery/dist/jquery.min.js"></script>
-    <!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-materialize/0.2.2/angular-materialize.min.js"></script> -->
     <!-- Compiled and minified JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
 
@@ -42,15 +41,27 @@
       <ng-include src="'/views/partials/navigation.html'"></ng-include>
     </ul>
     <nav class="grey darken-3" role="navigation" id="account-nav" ng-hide="accounts.length == 0">
-      <ul>
-        <li>Your Account: 
-          <select id="currentAccount" name="currentAccount" class="browser-default"
-              ng-model="selectedAccount"
-              ng-change="changeAccounts(selectedAccount)">
-              <option ng-repeat="_account in accounts" ng-selected="_account == selectedAccount" value="{{_account}}">{{_account}}</option>
-          </select>
-        </li>
-      </ul>
+      <div class="nav-wrapper container">
+        <ul>
+          <li ng-hide="selectedAccount">Account Loading...</li>
+          <li ng-show="selectedAccount">Your Account: 
+            <select id="currentAccount" name="currentAccount" class="browser-default"
+                ng-model="selectedAccount"
+                ng-change="changeAccount(selectedAccount)">
+                <option ng-repeat="_account in accounts" ng-selected="_account == selectedAccount" value="{{_account}}">{{_account}}</option>
+            </select>
+          </li>
+          <li ng-hide="selectedCurrency">Balance Loading...</li>
+          <li ng-show="selectedCurrency">Balance: 
+              <span ng-show="selectedCurrency == 'wei'">{{balance}}</span>
+              <span ng-show="selectedCurrency == 'ether'">{{balanceInEth}}</span>
+              <select class="browser-default" ng-model="selectedCurrency">
+                <option value="ether">Ether</option>
+                <option value="wei">Wei</option>
+              </select>
+            </li>
+        </ul>
+      </div>
     </nav>
   </header>
   
