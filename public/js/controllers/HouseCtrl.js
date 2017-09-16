@@ -1,13 +1,41 @@
 angular.module('HouseCtrl', [])
   .controller('HouseController', function($scope, $routeParams, HouseService, $rootScope) {
     $scope.house = {};
-    $scope.status;
+    $scope.status = '';
+
+    $scope.$watch(() => {
+      return $rootScope.selectedAccount;
+    }, (newValue, oldValue) => {
+      if( !newValue || !oldValue || newValue == oldValue)
+        return;
+      $scope.house.yourBalance = 0;
+      if ($scope.house.address) {
+        const chainHouse = $rootScope.BlockHouse.at($scope.house.address);
+        chainHouse.balances.call($rootScope.selectedAccount, {from:$rootScope.selectedAccount})
+          .then( _balance => {
+            $scope.house.yourBalance = parseInt(_balance.toString(10));
+            $scope.house.yourBalanceInEth = $rootScope.web3.fromWei($scope.house.yourBalance, "ether");
+            $scope.$apply();
+          });
+      }
+    });
 
     const showHouse = () => {
       HouseService.show($routeParams.house_id)
         .then( response => {
           $scope.house = response.data;
-          $scope.house.priceInEth = $rootScope.web3.fromWei($scope.house.price, "ether");
+          if ($scope.house.price) {
+            $scope.house.price = parseInt($scope.house.price.toString(10));
+            $scope.house.priceInEth = $rootScope.web3.fromWei($scope.house.price, "ether");
+          }
+          if ($scope.house.address) {
+            const chainHouse = $rootScope.BlockHouse.at($scope.house.address);
+            chainHouse.balances.call($rootScope.selectedAccount, {from:$rootScope.selectedAccount})
+              .then( _balance => {
+                $scope.house.yourBalance = parseInt(_balance.toString(10));
+                $scope.house.yourBalanceInEth = $rootScope.web3.fromWei($scope.house.yourBalance, "ether");
+              });
+          }
         }, err => {
           $scope.status = `Unable to load house data: ${err.message}`;
         });
@@ -31,11 +59,20 @@ angular.module('HouseCtrl', [])
       
       chainHouse.buyHouse({from:$rootScope.selectedAccount, value:$scope.house.price})
         .then( tx => {
-          console.log(tx);
           $scope.house.forSale = false;
           $scope.house.owner = $rootScope.selectedAccount;
           $rootScope.updateBalance();
           saveHouseData();
+        });
+    };
+
+    $scope.withdraw = () => {
+      const chainHouse = $rootScope.BlockHouse.at($scope.house.address);
+      chainHouse.withdrawFunds({from:$rootScope.selectedAccount})
+        .then( tx => {
+          console.log(tx);
+          $rootScope.updateBalance();
+          $scope.house.yourBalance = '';
         });
     };
   });

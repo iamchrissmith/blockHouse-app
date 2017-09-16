@@ -20,11 +20,14 @@
           <a ng-show="selectedAccount && house.owner != selectedAccount" ng-click="buyHouse()" class="waves-effect waves-light btn-large">Buy Now</a>
         </div>
         <div class="house-edit" ng-show="house.owner == selectedAccount">
-          <div ng-hide="house.soldTo == ''">
-            <h3>Your house has been sold to:</h3>
-            <p>{{house.soldTo}}. <br/>Click Edit to transfer ownership then you can withdraw your funds.</p>
-          </div>
           <a class="waves-effect waves-light btn-large blue-grey" href="/houses/{{house._id}}/edit">Edit</a>
+        </div>
+        <div class="balanceDue" ng-show="house.yourBalance && house.yourBalance != 0">
+          <p>You have an outstanding balance at this property of:<br/>
+            <span ng-show="selectedCurrency == 'wei'">{{house.yourBalance}} Wei.</span>
+            <span ng-hide="selectedCurrency == 'wei'">{{house.yourBalanceInEth}} Ether.</span>
+          </p>
+          <a class="btn-large waves-effect waves-light green" ng-click="withdraw()">Withdraw Balance</a>
         </div>
       </div>
       <div class="col s12 l6 house-sidebar">
