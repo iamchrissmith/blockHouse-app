@@ -16022,6 +16022,10 @@ angular.module('BlockHouses',
     'HouseService'
   ])
   .run( ($rootScope) => {
+
+    $rootScope.BlockHouse = BlockHouse;
+    $rootScope.web3 = web3;
+
     BlockHub.deployed()
     .then( _instance => {
       $rootScope.contract = _instance;
@@ -31654,6 +31658,49 @@ angular.module('HouseEditCtrl', [])
           $scope.status = `Unable to load house data: ${err.message}`;
         });
     };
+
+    const saveHouseData = () => {
+      HouseService.edit($scope.house)
+      .then( response => {
+        console.log(response.data);
+        $location.url(`/houses/${response.data.house._id}`);
+      }, err => {
+        $scope.status = `Unable to load house data: ${err.message}`;
+      });
+    };
+
+    $scope.updatePrice = () => {
+      const chainHouse = $rootScope.BlockHouse.at($scope.house.address);
+      chainHouse.updatePrice($scope.house.price, {from:$rootScope.selectedAccount})
+      .then( tx => {
+        console.log("price: ", tx);
+        saveHouseData();   
+      });
+    };
+
+    $scope.updateForSale = (_forSale) => {
+      $scope.house.forSale = _forSale;
+      const chainHouse = $rootScope.BlockHouse.at($scope.house.address);
+      if (!_forSale) {
+        chainHouse.stopSelling({from:$rootScope.selectedAccount})
+          .then( tx => {
+            console.log("stop: ",tx);
+            saveHouseData();   
+          });
+      } else {
+        chainHouse.startSelling({from:$rootScope.selectedAccount})
+          .then( tx => {
+            console.log("start: ", tx);
+            return chainHouse.updatePrice($scope.house.price, {from:$rootScope.selectedAccount});
+          })
+          .then( tx => {
+            console.log("price: ", tx);
+            saveHouseData();   
+          });
+      }
+
+      
+    };
   });
 
 /***/ }),
@@ -31661,7 +31708,7 @@ angular.module('HouseEditCtrl', [])
 /***/ (function(module, exports) {
 
 angular.module('HouseCtrl', [])
-  .controller('HouseController', function($scope, $routeParams, HouseService) {
+  .controller('HouseController', function($scope, $routeParams, HouseService, $rootScope) {
     $scope.house = {};
     $scope.status;
 
@@ -31669,6 +31716,7 @@ angular.module('HouseCtrl', [])
       HouseService.show($routeParams.house_id)
         .then( response => {
           $scope.house = response.data;
+          $scope.house.priceInEth = $rootScope.web3.fromWei($scope.house.price, "ether");
         }, err => {
           $scope.status = `Unable to load house data: ${err.message}`;
         });

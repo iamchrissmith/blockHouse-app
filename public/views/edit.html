@@ -2,16 +2,68 @@
   <h1>Edit 
     <span ng-hide="house.name != ''">House</span>
     <span ng-hide="house.name == ''">{{house.name}}</span> 
-    at {{house.address}}
+    at <span class="truncate">{{house.address}}</span>
   </h1>
+  <p><a href="/houses/{{house._id}}">&larr; Back to View House</a></p>
 </div>
 <div class="row">
-  <form class="col s12" ng-submit="editHouse()">
-    <ng-include src="'/views/partials/form.house.html'"></ng-include>
+  <div class="col s12">
+    <div ng-show="house.forSale" class="center">
+      <form class="col s12" ng-submit="updatePrice()">
+        <div class="input-field col s6">
+          <input ng-model="house.price" id="house_price" type="number" class="validate" min="0">
+          <label for="house_price" ng-class="{active: house.price}">Asking Price in Wei</label>
+        </div>
+        <div class="input-field col s6">
+          <input type="submit" class="btn-large waves-effect waves-light green" value="Update Asking Price" />
+        </div>
+      </form>
+      <div class="container center">
+        <button class="btn-large waves-effect waves-light light-blue darken-4" ng-click="updateForSale(false)">I want to stop selling my House</button>
+      </div>
+    </div>
+    <form ng-hide="house.forSale" class="col s12" ng-submit="updateForSale(true)">
+      <div class="input-field col s6">
+        <input ng-model="house.price" id="house_price" type="number" class="validate" min="0">
+        <label for="house_price" class="active">Asking Price in Wei</label>
+      </div>
+      <input type="submit" class="btn-large waves-effect waves-light green" value="I want to sell my House" />
+    </form>
+  </div>
+</div>
+<div class="divider"></div>
+<div class="row">
+  <form class="col s12" ng-submit="editHouseName()">
     <div class="row">
       <div class="input-field col s12">
-        <input class="btn-large waves-effect waves-light red" type="submit" value="Save House">
+        <input ng-model="house.name" id="house_name" type="text" class="validate">
+        <label for="house_name" ng-class="{active: house.name}">House Name</label>
+      </div>
+    </div>
+    <div class="row">
+      <div class="input-field col s12">
+        <input class="waves-effect waves-light btn-large blue-grey" type="submit" value="Save House Name">
       </div>
     </div>
   </form>
+</div>
+<div class="divider"></div>
+<div class="row"> <!-- TODO: need to mark house as sold. If sold, show this -->
+  <div class="col s12">
+    <h2>Transfer Ownership</h2>
+    <p>You must transfer ownership if you wish to withdraw funds for the sale of your house.  Once you do this you will no longer own this house.  This change is irreversible.</p>
+    <form class="col s12" ng-submit="changeOwner()">
+      <div class="row">
+        <div class="input-field col s12">
+          <input ng-model="newOwner" id="house_owner" type="text" class="validate" required>
+          <label for="house_owner">Owner</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s12">
+          <input class="btn-large waves-effect waves-light red" type="submit" value="Transfer Ownership">
+        </div>
+      </div>
+    </form>
+  </div>
 </div>
