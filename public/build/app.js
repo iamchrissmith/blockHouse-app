@@ -16003,6 +16003,13 @@ BlockHouse.setProvider(web3.currentProvider);
 Promise.promisifyAll(web3.eth, { suffix: "Promise" });
 Promise.promisifyAll(web3.version, { suffix: "Promise" });
 
+__webpack_require__(115);
+__webpack_require__(116);
+__webpack_require__(117);
+__webpack_require__(118);
+__webpack_require__(119);
+__webpack_require__(120);
+
 angular.module('BlockHouses',
   [
     'ngRoute', 
@@ -16017,14 +16024,17 @@ angular.module('BlockHouses',
 
   angular.module('MainCtrl',[])
   .controller('MainController', function($rootScope) {
+
+    console.log("BlockHub: ", BlockHub);
     
     BlockHub.deployed()
     .then( _instance => {
       $rootScope.contract = _instance;
-      return $rootScope.contract.owner.call({from:$rootScope.account});
+      return $rootScope.contract.owner.call({from:$rootScope.selectedAccount});
     })
     .then( _owner => {
       $rootScope.contract.owner = _owner;
+      $rootScope.$apply();
     });
 
     // Work with the first account    
@@ -16035,9 +16045,8 @@ angular.module('BlockHouses',
         }
         $rootScope.accounts = accounts;
         console.log("Other Accounts: ", $rootScope.accounts);
-        $rootScope.account = $rootScope.accounts[0];
-        console.log("ACCOUNT:", $rootScope.account);
-        $rootScope.selectedAccount = $rootScope.account;
+        $rootScope.selectedAccount = $rootScope.accounts[0];
+        console.log("ACCOUNT:", $rootScope.selectedAccount);
         $rootScope.$apply();
     }); 
   });
@@ -31526,6 +31535,171 @@ module.exports = {"contract_name":"BlockHub","abi":[{"constant":false,"inputs":[
 /***/ (function(module, exports) {
 
 module.exports = {"contract_name":"BlockHouse","abi":[{"constant":false,"inputs":[],"name":"withdrawFunds","outputs":[{"name":"success","type":"bool"}],"payable":false,"type":"function"},{"constant":true,"inputs":[{"name":"","type":"address"}],"name":"balances","outputs":[{"name":"","type":"uint256"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"onOff","type":"bool"}],"name":"runSwitch","outputs":[{"name":"success","type":"bool"}],"payable":false,"type":"function"},{"constant":true,"inputs":[],"name":"forSale","outputs":[{"name":"","type":"bool"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"newPrice","type":"uint256"}],"name":"updatePrice","outputs":[{"name":"success","type":"bool"}],"payable":false,"type":"function"},{"constant":true,"inputs":[],"name":"owner","outputs":[{"name":"","type":"address"}],"payable":false,"type":"function"},{"constant":true,"inputs":[],"name":"price","outputs":[{"name":"","type":"uint256"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"newOwner","type":"address"}],"name":"changeOwner","outputs":[{"name":"success","type":"bool"}],"payable":false,"type":"function"},{"constant":false,"inputs":[],"name":"startSelling","outputs":[{"name":"success","type":"bool"}],"payable":false,"type":"function"},{"constant":false,"inputs":[],"name":"stopSelling","outputs":[{"name":"success","type":"bool"}],"payable":false,"type":"function"},{"constant":false,"inputs":[],"name":"buyHouse","outputs":[{"name":"success","type":"bool"}],"payable":true,"type":"function"},{"constant":true,"inputs":[],"name":"running","outputs":[{"name":"","type":"bool"}],"payable":false,"type":"function"},{"constant":true,"inputs":[],"name":"titleHolder","outputs":[{"name":"","type":"address"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"newHolder","type":"address"}],"name":"changeTitleHolder","outputs":[{"name":"success","type":"bool"}],"payable":false,"type":"function"},{"inputs":[{"name":"_titleHolder","type":"address"},{"name":"_price","type":"uint256"},{"name":"_forSale","type":"bool"}],"payable":false,"type":"constructor"},{"anonymous":false,"inputs":[{"indexed":false,"name":"buyer","type":"address"},{"indexed":false,"name":"seller","type":"address"},{"indexed":false,"name":"amount","type":"uint256"}],"name":"LogSale","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"name":"sender","type":"address"},{"indexed":false,"name":"prevHolder","type":"address"},{"indexed":false,"name":"newHolder","type":"address"}],"name":"LogNewTitleHolder","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"name":"balanceHolder","type":"address"},{"indexed":false,"name":"balance","type":"uint256"}],"name":"LogBalanceUpdate","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"name":"recipient","type":"address"},{"indexed":false,"name":"amount","type":"uint256"}],"name":"LogWithdrawal","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"name":"sender","type":"address"},{"indexed":false,"name":"housePrice","type":"uint256"},{"indexed":false,"name":"isForSale","type":"bool"}],"name":"LogUpdatedHouse","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"name":"sender","type":"address"}],"name":"LogStartSelling","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"name":"sender","type":"address"}],"name":"LogStopSelling","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"name":"sender","type":"address"},{"indexed":false,"name":"switchSetting","type":"bool"}],"name":"LogRunSwitch","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"name":"sender","type":"address"},{"indexed":false,"name":"oldOwner","type":"address"},{"indexed":false,"name":"newOwner","type":"address"}],"name":"LogNewOwner","type":"event"}],"unlinked_binary":"0x6060604052341561000c57fe5b60405160608061093b8339810160409081528151602083015191909201515b5b5b60008054600160a060020a03191633600160a060020a03161790555b6000805460a060020a60ff021916740100000000000000000000000000000000000000001790555b60018054600160a060020a031916600160a060020a0385161790556002829055808061009b575060005b6003805460ff19169115159190911790555b5050505b61087b806100c06000396000f300606060405236156100b45763ffffffff60e060020a60003504166324600fc381146100b657806327e235e3146100da5780632dd9705814610108578063466ccac0146101315780638d6cc56d146101555780638da5cb5b1461017c578063a035b1fe146101a8578063a6f9dae1146101ca578063af224473146101fa578063b2dc71151461021e578063d111966414610242578063d85bd5261461025e578063e1ca060214610282578063f2ee907d146102ae575bfe5b34156100be57fe5b6100c66102de565b604080519115158252519081900360200190f35b34156100e257fe5b6100f6600160a060020a03600435166103ae565b60408051918252519081900360200190f35b341561011057fe5b6100c660043515156103c0565b604080519115158252519081900360200190f35b341561013957fe5b6100c661044b565b604080519115158252519081900360200190f35b341561015d57fe5b6100c6600435610454565b604080519115158252519081900360200190f35b341561018457fe5b61018c6104ec565b60408051600160a060020a039092168252519081900360200190f35b34156101b057fe5b6100f66104fb565b60408051918252519081900360200190f35b34156101d257fe5b6100c6600160a060020a0360043516610501565b604080519115158252519081900360200190f35b341561020257fe5b6100c66105a7565b604080519115158252519081900360200190f35b341561022657fe5b6100c6610618565b604080519115158252519081900360200190f35b6100c6610685565b604080519115158252519081900360200190f35b341561026657fe5b6100c6610770565b604080519115158252519081900360200190f35b341561028a57fe5b61018c610780565b60408051600160a060020a039092168252519081900360200190f35b34156102b657fe5b6100c6600160a060020a036004351661078f565b604080519115158252519081900360200190f35b60008054819060a060020a900460ff1615156102fa5760006000fd5b600160a060020a0333166000908152600460205260408120541161031e5760006000fd5b50600160a060020a033316600081815260046020526040808220805490839055905190929183156108fc02918491818181858888f19350505050151561036057fe5b60408051600160a060020a03331681526020810183905281517fb4214c8c54fc7442f36d3682f59aebaf09358a4431835b30efb29d52cf9e1e91929181900390910190a1600191505b5b5090565b60046020526000908152604090205481565b6000805433600160a060020a039081169116146103dd5760006000fd5b6000805460a060020a60ff02191660a060020a841515908102919091179091556040805133600160a060020a03168152602081019290925280517fe149139e745b87d23672d6d1bd3f9160008dc717a946188ef8c5155e4ee6b8459281900390910190a15060015b5b919050565b60035460ff1681565b60015460009033600160a060020a039081169116146104735760006000fd5b60005460a060020a900460ff16151561048c5760006000fd5b600282905560035460408051600160a060020a03331681526020810185905260ff909216151582820152517feb47961da57fc8038ed3cca00b1cda893d15f1802fb0467529b4b6a790ab4e069181900360600190a15060015b5b5b919050565b600054600160a060020a031681565b60025481565b6000805433600160a060020a0390811691161461051e5760006000fd5b600160a060020a03821615156105345760006000fd5b60005460408051600160a060020a033381168252928316602082015291841682820152517f95a4124b32fadd40e6e63088992a62e3505e61d1683b783d03e575d7c1dfb9679181900360600190a15060008054600160a060020a031916600160a060020a03831617905560015b5b919050565b60015460009033600160a060020a039081169116146105c65760006000fd5b60408051600160a060020a033316815290517feff54b763cee7b36867db61ba0906fd4dc0804b4863e38f9860984b1006ac1f19181900360200190a1506003805460ff191660019081179091555b5b90565b60015460009033600160a060020a039081169116146106375760006000fd5b60408051600160a060020a033316815290517fc4d3471de795efdaaf19e18a8c9b2250e40f55dd4e9b5d486b61b4104264dd759181900360200190a1506003805460ff1916905560015b5b90565b6000805460a060020a900460ff16151561069f5760006000fd5b60035460ff1615156106b15760006000fd5b60015433600160a060020a03908116911614156106ce5760006000fd5b60025434146106dd5760006000fd5b6003805460ff1916905560015460408051600160a060020a03338116825290921660208301523482820152517fd54bcd16fe4a4bde2c4ca4dc388c1b39f9db136f8dda0da05216222439ee62589181900360600190a15060018054600160a060020a0390811660009081526004602052604090208054340190558154600160a060020a031916339091161781555b5b5b90565b60005460a060020a900460ff1681565b600154600160a060020a031681565b60015460009033600160a060020a039081169116146107ae5760006000fd5b60005460a060020a900460ff1615156107c75760006000fd5b600160a060020a03821615156107dd5760006000fd5b60015460408051600160a060020a033381168252928316602082015291841682820152517f5e30a340541f2a71a81850883fc7ad72944737ef25fba246d75867ae2e1168569181900360600190a15060018054600160a060020a031916600160a060020a0383161781555b5b5b9190505600a165627a7a723058201727045ffdaa57a69c4f42807c73d06d61998cc91812cad10cf66f0fbc1cac3f0029","networks":{},"schema_version":"0.0.5","updated_at":1505526936741}
+
+/***/ }),
+/* 115 */
+/***/ (function(module, exports) {
+
+angular.module('HousesCtrl', [])
+  .controller('HousesController', function($scope, HouseService) {
+    $scope.houses = [];
+    $scope.status;
+
+    const getHouses = () => {
+      HouseService.get()
+        .then( response => {
+          $scope.status = '';
+          $scope.houses = response.data;
+        }, err => {
+          $scope.status = `Unable to load house data: ${err.message}`;
+        });
+    };
+
+    getHouses();
+  });
+
+/***/ }),
+/* 116 */
+/***/ (function(module, exports) {
+
+angular.module('HouseCreateCtrl', [])
+  .controller('CreateHouseController', function($location, $scope, $routeParams, HouseService) {
+    $scope.house = {};
+    
+    $scope.createHouse = () => {
+      const newHouse = $scope.house;
+      $scope.house = {};
+      newHouse.address = "0x000"; // need to get the real address from the blockchain.
+      HouseService.create(newHouse)
+        .then( response => {
+          console.log(response.data);
+          $location.url(`/houses/${response.data.id}`);
+        }, err => {
+          $scope.status = `Unable to load house data: ${err.message}`;
+        });
+    };
+  });
+
+/***/ }),
+/* 117 */
+/***/ (function(module, exports) {
+
+angular.module('HouseEditCtrl', [])
+  .controller('EditHouseController', function($location, $scope, $routeParams, HouseService) {
+    $scope.house = {};
+
+    const showHouse = () => {
+      HouseService.show($routeParams.house_id)
+        .then( response => {
+          $scope.house = response.data;
+        }, err => {
+          $scope.status = `Unable to load house data: ${err.message}`;
+        });
+    };
+
+    showHouse();
+    
+    $scope.editHouse = () => {
+      console.log($scope.house);
+      HouseService.edit($scope.house)
+        .then( response => {
+          console.log(response.data);
+          $location.url(`/houses/${response.data.house._id}`);
+        }, err => {
+          $scope.status = `Unable to load house data: ${err.message}`;
+        });
+    };
+  });
+
+/***/ }),
+/* 118 */
+/***/ (function(module, exports) {
+
+angular.module('HouseCtrl', [])
+  .controller('HouseController', function($scope, $routeParams, HouseService) {
+    $scope.house = {};
+    $scope.status;
+
+    const showHouse = () => {
+      HouseService.show($routeParams.house_id)
+        .then( response => {
+          $scope.house = response.data;
+        }, err => {
+          $scope.status = `Unable to load house data: ${err.message}`;
+        });
+    };
+
+    showHouse();
+  });
+
+/***/ }),
+/* 119 */
+/***/ (function(module, exports) {
+
+angular.module('HouseService', [])
+  .factory('HouseService', ['$http', function($http) {
+    const urlBase = 'api/v1/houses';
+
+    return {
+      get : () => {
+        return $http.get(urlBase);
+      },
+
+      create : (houseData) => {
+        return $http.post(urlBase, houseData);
+      },
+
+      show : (id) => {
+        return $http.get(urlBase + "/" + id);
+      },
+
+      edit : (houseData) => {
+        return $http.put(urlBase + "/" + houseData._id, houseData);
+      },
+
+      delete : (id) => {
+        return $http.delete(urlBase + "/" + id);
+      }
+    };
+  }]);
+
+/***/ }),
+/* 120 */
+/***/ (function(module, exports) {
+
+angular.module('appRoutes', [])
+  .config(
+    ['$routeProvider', '$locationProvider',
+    function($routeProvider, $locationProvider) {
+
+      $routeProvider
+        .when('/', {
+          templateUrl: 'views/home.html',
+          controller: 'MainController'
+        })
+
+        .when('/houses', {
+          templateUrl: 'views/houses.html',
+          controller: 'HousesController'
+        })
+
+        .when('/houses/new', {
+          templateUrl: 'views/create.html',
+          controller: 'CreateHouseController'
+        })
+
+        .when('/houses/:house_id/edit', {
+          templateUrl: 'views/edit.html',
+          controller: 'EditHouseController'
+        })
+
+        .when('/houses/:house_id', {
+          templateUrl: 'views/show.html',
+          controller: 'HouseController'
+        });
+
+      $locationProvider.html5Mode(true);
+    }]);
 
 /***/ })
 /******/ ]);

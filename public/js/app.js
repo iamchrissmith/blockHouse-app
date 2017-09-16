@@ -26,6 +26,13 @@ BlockHouse.setProvider(web3.currentProvider);
 Promise.promisifyAll(web3.eth, { suffix: "Promise" });
 Promise.promisifyAll(web3.version, { suffix: "Promise" });
 
+require('./controllers/HousesCtrl');
+require('./controllers/HouseCreateCtrl');
+require('./controllers/HouseEditCtrl');
+require('./controllers/HouseCtrl');
+require('./services/HouseService');
+require('./appRoutes');
+
 angular.module('BlockHouses',
   [
     'ngRoute', 
@@ -40,14 +47,17 @@ angular.module('BlockHouses',
 
   angular.module('MainCtrl',[])
   .controller('MainController', function($rootScope) {
+
+    console.log("BlockHub: ", BlockHub);
     
     BlockHub.deployed()
     .then( _instance => {
       $rootScope.contract = _instance;
-      return $rootScope.contract.owner.call({from:$rootScope.account});
+      return $rootScope.contract.owner.call({from:$rootScope.selectedAccount});
     })
     .then( _owner => {
       $rootScope.contract.owner = _owner;
+      $rootScope.$apply();
     });
 
     // Work with the first account    
@@ -58,9 +68,8 @@ angular.module('BlockHouses',
         }
         $rootScope.accounts = accounts;
         console.log("Other Accounts: ", $rootScope.accounts);
-        $rootScope.account = $rootScope.accounts[0];
-        console.log("ACCOUNT:", $rootScope.account);
-        $rootScope.selectedAccount = $rootScope.account;
+        $rootScope.selectedAccount = $rootScope.accounts[0];
+        console.log("ACCOUNT:", $rootScope.selectedAccount);
         $rootScope.$apply();
     }); 
   });
