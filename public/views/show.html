@@ -15,7 +15,7 @@
         <div class="house-sale" ng-show="house.forSale">
           <p>You can buy this house for 
             <span ng-show="selectedCurrency == 'wei'">{{house.price}} Wei.</span>
-            <span ng-show="selectedCurrency == 'ether'">{{house.priceInEth}} Ether.</span>
+            <span ng-hide="selectedCurrency == 'wei'">{{house.priceInEth}} Ether.</span>
           </p>
           <a class="waves-effect waves-light btn-large">Buy Now</a>
         </div>
