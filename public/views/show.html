@@ -37,10 +37,14 @@
     <div class="row">
       <h2>House History</h2>
       <ul class="collection">
-        <li class="collection-item">
-          <span class="title">Sale</span>
-          <p>From: 0x1234<br/>
-            To: 04311
+        <li class="collection-item" ng-repeat="event in history">
+          <span class="title">
+            {{event.title}} for 
+            <span ng-show="selectedCurrency == 'wei'">{{event.amount}} Wei</span>
+            <span ng-hide="selectedCurrency == 'wei'">{{event.amountInEth}} Ether</span>
+          </span>
+          <p>From: {{event.seller}}<br/>
+            To: {{event.buyer}}
           </p>
         </li>
       </ul>

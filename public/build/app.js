@@ -31713,6 +31713,7 @@ angular.module('HouseEditCtrl', [])
 angular.module('HouseCtrl', [])
   .controller('HouseController', function($scope, $routeParams, HouseService, $rootScope) {
     $scope.house = {};
+    $scope.history = [];
     $scope.status = '';
 
     $scope.$watch(() => {
@@ -31739,6 +31740,7 @@ angular.module('HouseCtrl', [])
           if ($scope.house.price) {
             $scope.house.price = parseInt($scope.house.price.toString(10));
             $scope.house.priceInEth = $rootScope.web3.fromWei($scope.house.price, "ether");
+            watchHouseUpdates();
           }
           if ($scope.house.address) {
             const chainHouse = $rootScope.BlockHouse.at($scope.house.address);
@@ -31754,6 +31756,21 @@ angular.module('HouseCtrl', [])
     };
 
     showHouse();
+
+    const watchHouseUpdates = () => {
+      const chainHouse = $rootScope.BlockHouse.at($scope.house.address);
+      $scope.saleWatcher = chainHouse.LogSale({}, {fromBlock:0})
+        .watch( (err, event) => {
+        const thisEvent = {
+          title: "Sale",
+          seller: event.args.seller,
+          buyer: event.args.buyer,
+          amount: parseInt(event.args.amount.toString(10))
+        };
+        thisEvent.amountInEth = $rootScope.web3.fromWei(thisEvent.amount, "ether");
+        $scope.history.push(thisEvent);
+      });
+    };
 
     const saveHouseData = () => {
       HouseService.edit($scope.house)
