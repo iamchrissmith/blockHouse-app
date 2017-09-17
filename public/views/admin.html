@@ -20,7 +20,12 @@
       <li class="collection-item" ng-repeat="account in adminAccounts">
         <div>
           {{account}}
-          <a href="#" ng-click="removeAdmin(account)" class="secondary-content red-text text-accent-4"><i class="material-icons">delete</i></a>
+          <a href="#" 
+              ng-hide="account == contractOwner"
+              ng-click="removeAdmin(account)" 
+              class="secondary-content red-text text-accent-4">
+              <i class="material-icons">delete</i>
+            </a>
         </div>
       </li>
     </ul>
