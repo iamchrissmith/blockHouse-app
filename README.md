@@ -25,7 +25,7 @@ In the account bar, you can change accounts, view your balance, and switch betwe
 
 Next you should navigate over to the Houses page to view the houses in your chain:
 
-![View Houses](documentation/BlockHouses - Houses.png?raw=true)
+![View Houses](documentation/BlockHouses-Houses.png?raw=true)
 
 On the house details page, you can view the blockchain address of the house, the address of the house's owner and other details the owner has loaded into the application (such as square footage, number of bedrooms/bathrooms, etc).  Additionally the application, will load the history of the house from the chain including title transfer, sales, price changes, and putting the house on the market or taking it off.  In the second tab you will be able to see a chart of the sale prices of the house through its history.
 
@@ -53,7 +53,7 @@ Off the blockchain details:
 
 If you owned a house that was purchased, you have a balance stored in the blockchain contract for that house.  You can withdraw that amount into your account by visiting the house page and clicking Withdraw once we have confirmed your balance on the blockchain.
 
-![Withdrawing Balance](documentation/BlockHouses - Withdraw.png?raw=true)
+![Withdrawing Balance](documentation/BlockHouses-Withdraw.png?raw=true)
 
 Lastly, if you control the blockchain account that owns the application (i.e. the blockhub contract owner), you can add and remove admins.  Admins are the accounts able to create houses on the chain.  In real life, these would be the house manufacturers.  In the admin page, you can enter the address of a new admin and remove existing admins (other than yourself).
 
