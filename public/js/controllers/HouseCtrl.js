@@ -68,6 +68,7 @@ angular.module('HouseCtrl', [])
         blockNumber: event.blockNumber
       };
       $scope.history.push(thisEvent);
+      $scope.$apply();
     };
 
     const saveStopSellingEvent = (err, event) => {
@@ -78,6 +79,7 @@ angular.module('HouseCtrl', [])
         blockNumber: event.blockNumber
       };
       $scope.history.push(thisEvent);
+      $scope.$apply();
     };
 
     const saveStartSellingEvent = (err, event) => {
@@ -88,6 +90,7 @@ angular.module('HouseCtrl', [])
         blockNumber: event.blockNumber
       };
       $scope.history.push(thisEvent);
+      $scope.$apply();
     };
 
     const saveUpdateEvent = (err, event) => {
@@ -100,6 +103,7 @@ angular.module('HouseCtrl', [])
       };
       thisEvent.priceInEth = $rootScope.web3.fromWei(thisEvent.price, "ether");
       $scope.history.push(thisEvent);
+      $scope.$apply();
     };
 
     const saveSaleEvent = (err, event) => {
@@ -112,6 +116,7 @@ angular.module('HouseCtrl', [])
       };
       thisEvent.amountInEth = $rootScope.web3.fromWei(thisEvent.amount, "ether");
       $scope.history.push(thisEvent);
+      $scope.$apply();
     }
 
     const saveHouseData = () => {

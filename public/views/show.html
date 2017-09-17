@@ -36,7 +36,8 @@
     </div>
     <div class="row">
       <h2>House History</h2>
-      <ul class="collection">
+      <p ng-show="history.length == 0">Watching for new events on the blockchain.</p>
+      <ul ng-hide="history.length == 0" class="collection">
         <li class="collection-item" ng-repeat="event in history | orderBy:'blockNumber'">
           <div ng-if="event.title == 'Sale'">
             <span class="title">
