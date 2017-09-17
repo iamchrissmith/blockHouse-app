@@ -28,3 +28,57 @@
     <label for="house_owner" ng-class="{active: house.owner}">Owner</label>
   </div>
 </div>
+<div class="row">
+    <div class="input-field col s12">
+      <input ng-model="house.size" id="house_size" type="number" class="validate">
+      <label for="house_size" ng-class="{active: house.size}">House size (sq ft)</label>
+    </div>
+  </div>
+  <div class="row">
+    <div class="input-field col s12">
+      <input ng-model="house.type" id="house_type" type="text" class="validate">
+      <label for="house_type" ng-class="{active: house.type}">House Type</label>
+    </div>
+  </div>
+  <div class="row">
+    <div class="input-field col s12">
+      <input ng-model="house.bedrooms" id="house_bedrooms" type="number" class="validate">
+      <label for="house_bedrooms" ng-class="{active: house.bedrooms}">Number of Bedrooms</label>
+    </div>
+  </div>
+  <div class="row">
+    <div class="input-field col s12">
+      <input ng-model="house.bathrooms" id="house_bathrooms" type="number" class="validate">
+      <label for="house_bathrooms" ng-class="{active: house.bathrooms}">Number of Bathrooms</label>
+    </div>
+  </div>
+  <div class="row">
+    <div class="input-field col s12">
+      <textarea ng-model="house.description" id="house_description"></textarea>
+      <label for="house_description" ng-class="{active: house.description}">Description</label>
+    </div>
+  </div>
+  <div class="row">
+    <div class="input-field col s12">
+      <input ng-model="house.st_address" id="house_st_address" type="text" class="validate">
+      <label for="house_st_address" ng-class="{active: house.st_address}">Street Address</label>
+    </div>
+  </div>
+  <div class="row">
+    <div class="input-field col s12">
+      <input ng-model="house.city" id="house_city" type="text" class="validate">
+      <label for="house_city" ng-class="{active: house.city}">City</label>
+    </div>
+  </div>
+  <div class="row">
+    <div class="input-field col s12">
+      <input ng-model="house.state" id="house_state" type="text" class="validate">
+      <label for="house_state" ng-class="{active: house.state}">State</label>
+    </div>
+  </div>
+  <div class="row">
+    <div class="input-field col s12">
+      <input ng-model="house.zipcode" id="house_zipcode" type="text" class="validate">
+      <label for="house_zipcode" ng-class="{active: house.zipcode}">Zipcode</label>
+    </div>
+  </div>

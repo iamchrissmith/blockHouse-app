@@ -108,6 +108,33 @@ describe('Houses', () => {
 
             assert.property(res.body, 'owner');
             assert.equal(res.body.owner, house.owner);
+
+            assert.property(res.body, 'size');
+            assert.equal(res.body.size, 0);
+
+            assert.property(res.body, 'type');
+            assert.equal(res.body.type, '');
+
+            assert.property(res.body, 'bedrooms');
+            assert.equal(res.body.bedrooms, 0);
+
+            assert.property(res.body, 'bathrooms');
+            assert.equal(res.body.bathrooms, 0);
+
+            assert.property(res.body, 'description');
+            assert.equal(res.body.description, '');
+
+            assert.property(res.body, 'st_address');
+            assert.equal(res.body.st_address, '');
+
+            assert.property(res.body, 'city');
+            assert.equal(res.body.city, '');
+
+            assert.property(res.body, 'state');
+            assert.equal(res.body.state, '');
+
+            assert.property(res.body, 'zipcode');
+            assert.equal(res.body.zipcode, '');
             done();
           });
       });

@@ -37,8 +37,9 @@
   </div>
   <div class="divider"></div>
   <div class="row">
-    <h2>Rename Your House</h2>
-    <form class="col s12" ng-submit="updateHouseName()">
+    <h2>Update Your House Details</h2>
+    <p><em>Note: these details are not stored in the blockchain</em></p>
+    <form class="col s12" ng-submit="updateHouseDetails()">
       <div class="row">
         <div class="input-field col s12">
           <input ng-model="house.name" id="house_name" type="text" class="validate">
@@ -46,8 +47,60 @@
         </div>
       </div>
       <div class="row">
+        <div class="input-field col s12 m6">
+          <input ng-model="house.size" id="house_size" type="number" class="validate">
+          <label for="house_size" class="active">House size (sq ft)</label>
+        </div>
+        <div class="col s12 m6">
+          <select class="browser-default" name="house_type" ng-model="house.type">
+            <option value='' selected="selected">-- Select --</option>
+            <option value="moveable">Moveable</option>
+            <option value="stationary">Stationary</option>
+          </select>
+          <label for="house_type">House Type</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s12 m6">
+          <input ng-model="house.bedrooms" id="house_bedrooms" type="number" class="validate">
+          <label for="house_bedrooms" class="active">Number of Bedrooms</label>
+        </div>
+        <div class="input-field col s12 m6">
+          <input ng-model="house.bathrooms" id="house_bathrooms" type="number" class="validate">
+          <label for="house_bathrooms" class="active">Number of Bathrooms</label>
+        </div>
+      </div>
+      <div class="row">
         <div class="input-field col s12">
-          <input class="waves-effect waves-light btn-large blue-grey" type="submit" value="Save House Name">
+          <textarea ng-model="house.description" id="house_description"></textarea>
+          <label for="house_description" ng-class="{active: house.description}">Description</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s12">
+          <input ng-model="house.st_address" id="house_st_address" type="text" class="validate">
+          <label for="house_st_address" ng-class="{active: house.st_address}">Street Address</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s12">
+          <input ng-model="house.city" id="house_city" type="text" class="validate">
+          <label for="house_city" ng-class="{active: house.city}">City</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s12 m6">
+          <input ng-model="house.state" id="house_state" type="text" class="validate">
+          <label for="house_state" ng-class="{active: house.state}">State</label>
+        </div>
+        <div class="input-field col s12 m6">
+          <input ng-model="house.zipcode" id="house_zipcode" type="text" class="validate">
+          <label for="house_zipcode" ng-class="{active: house.zipcode}">Zipcode</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s12">
+          <input class="waves-effect waves-light btn-large blue-grey" type="submit" value="Save House Details">
         </div>
       </div>
     </form>
