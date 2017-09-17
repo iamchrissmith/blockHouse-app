@@ -58,3 +58,7 @@ If you owned a house that was purchased, you have a balance stored in the blockc
 Lastly, if you control the blockchain account that owns the application (i.e. the blockhub contract owner), you can add and remove admins.  Admins are the accounts able to create houses on the chain.  In real life, these would be the house manufacturers.  In the admin page, you can enter the address of a new admin and remove existing admins (other than yourself).
 
 ![Managing Admins](documentation/managing-admins.gif?raw=true)
+
+Here is the conceptualization of the database for how the application works and where the data are stored (db VS blockchain)
+
+![DB Schema](documentation/blockhouses-db.png?raw=true)
