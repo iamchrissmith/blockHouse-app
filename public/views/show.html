@@ -37,15 +37,28 @@
     <div class="row">
       <h2>House History</h2>
       <ul class="collection">
-        <li class="collection-item" ng-repeat="event in history">
-          <span class="title">
-            {{event.title}} for 
-            <span ng-show="selectedCurrency == 'wei'">{{event.amount}} Wei</span>
-            <span ng-hide="selectedCurrency == 'wei'">{{event.amountInEth}} Ether</span>
-          </span>
-          <p>From: {{event.seller}}<br/>
-            To: {{event.buyer}}
-          </p>
+        <li class="collection-item" ng-repeat="event in history | orderBy:'blockNumber'">
+          <div ng-if="event.title == 'Sale'">
+            <span class="title">
+              {{event.title}} for 
+              <span ng-show="selectedCurrency == 'wei'">{{event.amount}} Wei</span>
+              <span ng-hide="selectedCurrency == 'wei'">{{event.amountInEth}} Ether</span>
+            </span>
+            <p>From: {{event.seller}}<br/>
+              To: {{event.buyer}}<br/>
+              Updated At: {{event.blockNumber}}
+            </p>
+          </div>
+          <div ng-if="event.title == 'UpdatedHouse'">
+            <span class="title">{{event.title}}</span>
+            <p>Requested by: {{event.sender}}<br/>
+              Price: 
+              <span ng-show="selectedCurrency == 'wei'">{{event.price}} Wei</span>
+              <span ng-hide="selectedCurrency == 'wei'">{{event.priceInEth}} Ether</span></br>
+              For Sale: {{event.forSale}}<br/>
+              Updated At: {{event.blockNumber}}
+            </p>
+          </div>
         </li>
       </ul>
     </div>

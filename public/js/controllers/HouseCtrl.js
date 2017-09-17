@@ -48,17 +48,35 @@ angular.module('HouseCtrl', [])
     const watchHouseUpdates = () => {
       const chainHouse = $rootScope.BlockHouse.at($scope.house.address);
       $scope.saleWatcher = chainHouse.LogSale({}, {fromBlock:0})
-        .watch( (err, event) => {
-        const thisEvent = {
-          title: "Sale",
-          seller: event.args.seller,
-          buyer: event.args.buyer,
-          amount: parseInt(event.args.amount.toString(10))
-        };
-        thisEvent.amountInEth = $rootScope.web3.fromWei(thisEvent.amount, "ether");
-        $scope.history.push(thisEvent);
-      });
+        .watch( saveSaleEvent );
+      $scope.updateWatcher = chainHouse.LogUpdatedHouse({}, {fromBlock:0})
+        .watch( saveUpdateEvent );
     };
+
+    const saveUpdateEvent = (err, event) => {
+      console.log(event);
+      const thisEvent = {
+        title: event.event.replace('Log',''),
+        sender: event.args.sender,
+        forSale: event.args.isForSale,
+        price: parseInt(event.args.housePrice.toString(10)),
+        blockNumber: event.blockNumber
+      };
+      thisEvent.priceInEth = $rootScope.web3.fromWei(thisEvent.price, "ether");
+      $scope.history.push(thisEvent);
+    };
+
+    const saveSaleEvent = (err, event) => {
+      const thisEvent = {
+        title: event.event.replace('Log',''),
+        seller: event.args.seller,
+        buyer: event.args.buyer,
+        amount: parseInt(event.args.amount.toString(10)),
+        blockNumber: event.blockNumber
+      };
+      thisEvent.amountInEth = $rootScope.web3.fromWei(thisEvent.amount, "ether");
+      $scope.history.push(thisEvent);
+    }
 
     const saveHouseData = () => {
       HouseService.edit($scope.house)
