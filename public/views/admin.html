@@ -1,0 +1,28 @@
+<div class="container">
+  <div class="section">
+    <div class="row">
+      <h1>Add an Administrative Address</h1>
+      <form class="col s12" ng-submit="addAdmin()">
+          <div class="input-field col s12">
+            <input ng-model="newAdmin" id="new_admin" type="text" class="validate" required>
+            <label for="new_admin">New Admin Address</label>
+          </div>
+          <div class="input-field col s12">
+            <input type="submit" class="btn-large waves-effect waves-light green" value="Save New Admin Address" />
+          </div>
+      </form>
+    </div>
+  </div>
+  <div class="section">
+    <h3>Current Administrators ({{adminAccounts.length}})</h3>
+    <p ng-show="loading">Loading Admins from Blockchain</p>
+    <ul class="collection" ng-hide="loading">
+      <li class="collection-item" ng-repeat="account in adminAccounts">
+        <div>
+          {{account}}
+          <a href="#" ng-click="removeAdmin(account)" class="secondary-content red-text text-accent-4"><i class="material-icons">delete</i></a>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>

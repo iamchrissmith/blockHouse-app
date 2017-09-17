@@ -9,6 +9,11 @@ angular.module('appRoutes', [])
           controller: 'MainController'
         })
 
+        .when('/admins', {
+          templateUrl: 'views/admin.html',
+          controller: 'AdminController'
+        })
+
         .when('/houses', {
           templateUrl: 'views/houses.html',
           controller: 'HousesController'

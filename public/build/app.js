@@ -16009,6 +16009,7 @@ __webpack_require__(117);
 __webpack_require__(118);
 __webpack_require__(119);
 __webpack_require__(120);
+__webpack_require__(121);
 
 angular.module('BlockHouses',
   [
@@ -16019,6 +16020,7 @@ angular.module('BlockHouses',
     'HouseCreateCtrl', 
     'HouseEditCtrl', 
     'HouseCtrl', 
+    'AdminCtrl', 
     'HouseService'
   ])
   .run( ($rootScope) => {
@@ -16032,7 +16034,7 @@ angular.module('BlockHouses',
       return $rootScope.contract.owner.call({from:$rootScope.selectedAccount});
     })
     .then( _owner => {
-      $rootScope.contract.owner = _owner;
+      $rootScope.contractOwner = _owner;
       $rootScope.$apply();
     });
 
@@ -31791,6 +31793,68 @@ angular.module('HouseCtrl', [])
 /* 119 */
 /***/ (function(module, exports) {
 
+angular.module('AdminCtrl', [])
+  .controller('AdminController', function($scope, $routeParams, HouseService, $rootScope, $location){
+    $scope.adminAccounts = [];
+    $scope.loading = true;
+
+    const loadAdmins = () => {
+      if(!$rootScope.contract || !$rootScope.selectedAccount || $rootScope.selectedAccount != $rootScope.contractOwner) {
+        $location.url('/houses');
+        return;
+      }
+
+      let adminCount;
+      console.log("admin");
+      $rootScope.contract.getAdminCount.call()
+      .then( _count => {
+        adminCount = parseInt(_count.toString(10));
+        for(let i = 0; i < adminCount; i++){
+          $rootScope.contract.getAdminAtIndex.call(i)
+          .then( _admin => {
+            if ($scope.loading == true) {
+              $scope.loading = false;
+            }
+            $scope.adminAccounts.push(_admin);
+            $scope.$apply();
+          });
+        }
+      });
+    };
+
+    loadAdmins();
+
+    $scope.addAdmin = () => {
+      console.log($scope.newAdmin);
+      if ($rootScope.selectedAccount != $rootScope.contractOwner)
+        return;
+      $rootScope.contract.addAdmin($scope.newAdmin, {from:$rootScope.selectedAccount, gas: 4000000})
+        .then( tx => {
+          $scope.adminAccounts.push($scope.newAdmin);
+          $scope.newAdmin = '';
+          $scope.$apply();
+        });
+    };
+
+    $scope.removeAdmin = (address) => {
+      console.log(address);
+      if (address == $rootScope.selectedAccount)
+        return;
+      $rootScope.contract.removeAdmin(address, {from:$rootScope.selectedAccount})
+        .then( tx => {
+          console.log(tx);
+          const toDelete = $scope.adminAccounts.indexOf(address);
+          $scope.adminAccounts.splice(toDelete,1);
+          console.log($scope.adminAccounts);
+          $scope.$apply();
+        });
+    };
+  });
+
+/***/ }),
+/* 120 */
+/***/ (function(module, exports) {
+
 angular.module('HouseService', [])
   .factory('HouseService', ['$http', function($http) {
     const urlBase = 'api/v1/houses';
@@ -31819,7 +31883,7 @@ angular.module('HouseService', [])
   }]);
 
 /***/ }),
-/* 120 */
+/* 121 */
 /***/ (function(module, exports) {
 
 angular.module('appRoutes', [])
@@ -31831,6 +31895,11 @@ angular.module('appRoutes', [])
         .when('/', {
           templateUrl: 'views/home.html',
           controller: 'MainController'
+        })
+
+        .when('/admins', {
+          templateUrl: 'views/admin.html',
+          controller: 'AdminController'
         })
 
         .when('/houses', {

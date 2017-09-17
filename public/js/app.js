@@ -30,6 +30,7 @@ require('./controllers/HousesCtrl');
 require('./controllers/HouseCreateCtrl');
 require('./controllers/HouseEditCtrl');
 require('./controllers/HouseCtrl');
+require('./controllers/AdminCtrl');
 require('./services/HouseService');
 require('./appRoutes');
 
@@ -42,6 +43,7 @@ angular.module('BlockHouses',
     'HouseCreateCtrl', 
     'HouseEditCtrl', 
     'HouseCtrl', 
+    'AdminCtrl', 
     'HouseService'
   ])
   .run( ($rootScope) => {
@@ -55,7 +57,7 @@ angular.module('BlockHouses',
       return $rootScope.contract.owner.call({from:$rootScope.selectedAccount});
     })
     .then( _owner => {
-      $rootScope.contract.owner = _owner;
+      $rootScope.contractOwner = _owner;
       $rootScope.$apply();
     });
 

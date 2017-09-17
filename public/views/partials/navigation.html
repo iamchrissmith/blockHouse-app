@@ -1,3 +1,4 @@
 <li><a href="/houses">Houses</a></li>
 <li ng-show="selectedAccount != ''"><a href="/houses#mine">My Houses</a></li>
 <li ng-show="isAdmin"><a href="/houses/new">New House</a></li>
+<li ng-show="selectedAccount == contractOwner"><a href="/admins">Admins</a></li>
