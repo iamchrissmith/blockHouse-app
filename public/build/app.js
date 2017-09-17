@@ -31571,7 +31571,7 @@ module.exports = {"contract_name":"BlockHouse","abi":[{"constant":false,"inputs"
 /***/ (function(module, exports) {
 
 angular.module('HousesCtrl', [])
-  .controller('HousesController', function($scope, HouseService) {
+  .controller('HousesController', function($scope, HouseService, $rootScope) {
     $scope.houses = [];
     $scope.status;
 
@@ -31579,7 +31579,10 @@ angular.module('HousesCtrl', [])
       HouseService.get()
         .then( response => {
           $scope.status = '';
-          $scope.houses = response.data;
+          $scope.houses = response.data.map( house => {
+            house.priceInEth = $rootScope.web3.fromWei(house.price, "ether");
+            return house;
+          });
         }, err => {
           $scope.status = `Unable to load house data: ${err.message}`;
         });
@@ -31650,15 +31653,15 @@ angular.module('HouseEditCtrl', [])
 
     showHouse();
     
-    $scope.updateHouseName = () => {
-      console.log($scope.house);
+    $scope.updateHouseDetails = () => {
+      console.log("House Details", $scope.house);
       saveHouseData();
     };
 
     const saveHouseData = () => {
       HouseService.edit($scope.house)
       .then( response => {
-        console.log(response.data);
+        console.log("Response details: ", response.data);
         $location.url(`/houses/${response.data.house._id}`);
       }, err => {
         $scope.status = `Unable to load house data: ${err.message}`;
@@ -31710,11 +31713,14 @@ angular.module('HouseEditCtrl', [])
 /* 118 */
 /***/ (function(module, exports) {
 
-angular.module('HouseCtrl', [])
+angular.module('HouseCtrl', ['chart.js'])
   .controller('HouseController', function($scope, $routeParams, HouseService, $rootScope) {
     $scope.house = {};
     $scope.history = [];
     $scope.status = '';
+    $scope.price_labels = [];
+    $scope.price_series = ["Sales"];
+    $scope.price_data = [];
 
     $scope.$watch(() => {
       return $rootScope.selectedAccount;
@@ -31827,6 +31833,8 @@ angular.module('HouseCtrl', [])
         blockNumber: event.blockNumber
       };
       thisEvent.amountInEth = $rootScope.web3.fromWei(thisEvent.amount, "ether");
+      $scope.price_labels.push(thisEvent.blockNumber);
+      $scope.price_data.push(thisEvent.amountInEth);
       $scope.history.push(thisEvent);
       $scope.$apply();
     }

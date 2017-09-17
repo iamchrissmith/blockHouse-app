@@ -16,15 +16,15 @@ angular.module('HouseEditCtrl', [])
 
     showHouse();
     
-    $scope.updateHouseName = () => {
-      console.log($scope.house);
+    $scope.updateHouseDetails = () => {
+      console.log("House Details", $scope.house);
       saveHouseData();
     };
 
     const saveHouseData = () => {
       HouseService.edit($scope.house)
       .then( response => {
-        console.log(response.data);
+        console.log("Response details: ", response.data);
         $location.url(`/houses/${response.data.house._id}`);
       }, err => {
         $scope.status = `Unable to load house data: ${err.message}`;

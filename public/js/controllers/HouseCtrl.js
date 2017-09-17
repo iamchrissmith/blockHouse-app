@@ -1,8 +1,11 @@
-angular.module('HouseCtrl', [])
+angular.module('HouseCtrl', ['chart.js'])
   .controller('HouseController', function($scope, $routeParams, HouseService, $rootScope) {
     $scope.house = {};
     $scope.history = [];
     $scope.status = '';
+    $scope.price_labels = [];
+    $scope.price_series = ["Sales"];
+    $scope.price_data = [];
 
     $scope.$watch(() => {
       return $rootScope.selectedAccount;
@@ -115,6 +118,8 @@ angular.module('HouseCtrl', [])
         blockNumber: event.blockNumber
       };
       thisEvent.amountInEth = $rootScope.web3.fromWei(thisEvent.amount, "ether");
+      $scope.price_labels.push(thisEvent.blockNumber);
+      $scope.price_data.push(thisEvent.amountInEth);
       $scope.history.push(thisEvent);
       $scope.$apply();
     }

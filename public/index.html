@@ -18,6 +18,8 @@
     <script src="libs/angular/angular.min.js"></script>
     <script src="libs/angular-route/angular-route.min.js"></script>
     <script src="libs/jquery/dist/jquery.min.js"></script>
+    <script src="libs/chart.js/dist/Chart.min.js"></script>
+    <script src="libs/angular-chart.js/dist/angular-chart.min.js"></script>
     <!-- Compiled and minified JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
 
@@ -76,7 +78,9 @@
 
         $('.button-collapse').sideNav();
         setTimeout(function () {
-          $('select').material_select();
+          $(document).ready(function(){
+            $('ul.tabs').tabs();
+          });
         }, 200);
 
       }); // end of document ready

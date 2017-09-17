@@ -9,6 +9,15 @@ class HouseController {
     house.price = req.body.price;
     house.forSale = req.body.forSale;
     house.owner = req.body.owner;
+    house.size = req.body.size;
+    house.type = req.body.type;
+    house.bedrooms = req.body.bedrooms;
+    house.bathrooms = req.body.bathrooms;
+    house.description = req.body.description;
+    house.st_address = req.body.st_address;
+    house.city = req.body.city;
+    house.state = req.body.state;
+    house.zipcode = req.body.zipcode;
     
     house.save( err => {
       if(err)
@@ -45,6 +54,15 @@ class HouseController {
       house.price = req.body.price;
       house.forSale = req.body.forSale;
       house.owner = req.body.owner;
+      house.size = req.body.size;
+      house.type = req.body.type;
+      house.bedrooms = req.body.bedrooms;
+      house.bathrooms = req.body.bathrooms;
+      house.description = req.body.description;
+      house.st_address = req.body.st_address;
+      house.city = req.body.city;
+      house.state = req.body.state;
+      house.zipcode = req.body.zipcode;
 
       house.save( err => {
         if(err)

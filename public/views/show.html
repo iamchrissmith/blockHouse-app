@@ -31,51 +31,82 @@
         </div>
       </div>
       <div class="col s12 l6 house-sidebar">
-          <img src="https://placeimg.com/640/480/arch/grayscale" width="640" height="480"/>
+          <ul class="collection with-header">
+            <li class="collection-header"><h4>House Details</h4></li>
+            <li class=collection-item 
+                ng-hide="house.size != 0 || house.type != '' || house.bedrooms != 0 || house.bathrooms != 0 || house.description != '' || house.st_address != ''">
+                No details at this time.
+            </li>
+            <li class="collection-item" ng-show="house.size != 0">{{house.size}} sq ft</li>
+            <li class="collection-item" ng-show="house.type != ''">Type: {{house.type}}</li>
+            <li class="collection-item" ng-show="house.bedrooms != 0">Bedrooms: {{house.bedrooms}}</li>
+            <li class="collection-item" ng-show="house.bathrooms != 0">Bathrooms: {{house.bathrooms}}</li>
+            <li class="collection-item" ng-show="house.description != ''">Description <br/>{{house.description}}</li>
+            <li class="collection-item" ng-show="house.st_address != ''">
+              Location<br/>
+              {{house.st_address}}<br/>
+              {{house.city}}, {{house.state}} {{house.zipcode}}
+            </li>
+          </ul>
       </div>
     </div>
     <div class="row">
-      <h2>House History</h2>
-      <p ng-show="history.length == 0">Watching for new events on the blockchain.</p>
-      <ul ng-hide="history.length == 0" class="collection">
-        <li class="collection-item" ng-repeat="event in history | orderBy:'blockNumber'">
-          <div ng-if="event.title == 'Sale'">
-            <span class="title">
-              {{event.title}} for 
-              <span ng-show="selectedCurrency == 'wei'">{{event.amount}} Wei</span>
-              <span ng-hide="selectedCurrency == 'wei'">{{event.amountInEth}} Ether</span>
-            </span>
-            <p>From: {{event.seller}}<br/>
-              To: {{event.buyer}}<br/>
-              Updated At: {{event.blockNumber}}
-            </p>
-          </div>
-          <div ng-if="event.title == 'Updated House'">
-            <span class="title">{{event.title}}</span>
-            <p>Requested by: {{event.sender}}<br/>
-              Price: 
-              <span ng-show="selectedCurrency == 'wei'">{{event.price}} Wei</span>
-              <span ng-hide="selectedCurrency == 'wei'">{{event.priceInEth}} Ether</span></br>
-              For Sale: {{event.forSale}}<br/>
-              Updated At: {{event.blockNumber}}
-            </p>
-          </div>
-          <div ng-if="event.title == 'Start Selling' || event.title == 'Stop Selling'">
-            <span class="title">{{event.title}}</span>
-            <p>Requested by: {{event.sender}}<br/>
-              For Sale: {{event.forSale}}<br/>
-              Updated At: {{event.blockNumber}}
-            </p>
-          </div>
-          <div ng-if="event.title == 'New Title Holder'">
-            <span class="title">{{event.title}}</span>
-            <p>Previous Owner: {{event.prev}}<br/>
-              New Owner: {{event.newOwner}}<br/>
-              Updated At: {{event.blockNumber}}
-            </p>
-          </div>
-        </li>
-      </ul>
+      <div class="col s12">
+        <ul class="tabs">
+          <li class="tab col s6"><a class="active" href="#house-history">House Blockchain History</a></li>
+          <li class="tab col s6"><a href="#price-history">House Sale History</a></li>
+        </ul>
+      </div>
+      <div class="divider"></div>
+      <div id="house-history">
+        <p ng-show="history.length == 0">Watching for new events on the blockchain.</p>
+        <ul ng-hide="history.length == 0" class="collection">
+          <li class="collection-item" ng-repeat="event in history | orderBy:'blockNumber'">
+            <div ng-if="event.title == 'Sale'">
+              <span class="title">
+                {{event.title}} for 
+                <span ng-show="selectedCurrency == 'wei'">{{event.amount}} Wei</span>
+                <span ng-hide="selectedCurrency == 'wei'">{{event.amountInEth}} Ether</span>
+              </span>
+              <p>From: {{event.seller}}<br/>
+                To: {{event.buyer}}<br/>
+                Updated At: {{event.blockNumber}}
+              </p>
+            </div>
+            <div ng-if="event.title == 'Updated House'">
+              <span class="title">{{event.title}}</span>
+              <p>Requested by: {{event.sender}}<br/>
+                Price: 
+                <span ng-show="selectedCurrency == 'wei'">{{event.price}} Wei</span>
+                <span ng-hide="selectedCurrency == 'wei'">{{event.priceInEth}} Ether</span></br>
+                For Sale: {{event.forSale}}<br/>
+                Updated At: {{event.blockNumber}}
+              </p>
+            </div>
+            <div ng-if="event.title == 'Start Selling' || event.title == 'Stop Selling'">
+              <span class="title">{{event.title}}</span>
+              <p>Requested by: {{event.sender}}<br/>
+                For Sale: {{event.forSale}}<br/>
+                Updated At: {{event.blockNumber}}
+              </p>
+            </div>
+            <div ng-if="event.title == 'New Title Holder'">
+              <span class="title">{{event.title}}</span>
+              <p>Previous Owner: {{event.prev}}<br/>
+                New Owner: {{event.newOwner}}<br/>
+                Updated At: {{event.blockNumber}}
+              </p>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div id="price-history" width="300px" height="300">
+        {{price_data}}
+        <canvas id="bar" class="chart chart-bar"
+          chart-data="price_data" chart-labels="price_labels" chart-series="price_series">
+        </canvas>
+        <p class="center"><em>(in Ether)</em></p>
+      </div>
     </div>
     
   </div>
