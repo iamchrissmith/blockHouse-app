@@ -44,7 +44,8 @@ angular.module('BlockHouses',
     'HouseEditCtrl', 
     'HouseCtrl', 
     'AdminCtrl', 
-    'HouseService'
+    'HouseService',
+    'ngAria'
   ])
   .run( ($rootScope) => {
 

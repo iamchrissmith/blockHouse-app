@@ -31,6 +31,7 @@
  <body ng-app="BlockHouses" ng-controller="HouseController">
   <header>
     <nav class="grey darken-4" role="navigation">
+      <div class="screen-reader-text skip-link"><a href="#content">Skip to main content</a></div>
       <div class="nav-wrapper container">
         <a id="logo-container" href="/" class="brand-logo"><img src="./assets/blockhouses-logo.png" /></a>
         <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
@@ -67,7 +68,7 @@
     </nav>
   </header>
 
-  <div class="container">
+  <div class="container" id="content">
     <div ng-view></div>
   </div>
   
@@ -80,6 +81,7 @@
         setTimeout(function () {
           $(document).ready(function(){
             $('ul.tabs').tabs();
+            $('.nav-modile li a').attr('tab-index', -1);
           });
         }, 200);
 
