@@ -31763,12 +31763,48 @@ angular.module('HouseCtrl', [])
         .watch( saveSaleEvent );
       $scope.updateWatcher = chainHouse.LogUpdatedHouse({}, {fromBlock:0})
         .watch( saveUpdateEvent );
+      $scope.startSaleWatcher = chainHouse.LogStartSelling({}, {fromBlock:0})
+        .watch( saveStartSellingEvent );
+      $scope.stopSaleWatcher = chainHouse.LogStopSelling({}, {fromBlock:0})
+        .watch( saveStopSellingEvent );
+      $scope.newTitleHolder = chainHouse.LogNewTitleHolder({}, {fromBlock:0})
+        .watch( saveNewTitleHolder );
+    };
+
+    const saveNewTitleHolder = (err, event) => {
+      const thisEvent = {
+        title: event.event.replace('Log','').replace(/([A-Z]+)/g, ' $1').trim(),
+        sender: event.args.sender,
+        prev: event.args.prevHolder,
+        newOwner: event.args.newHolder,
+        blockNumber: event.blockNumber
+      };
+      $scope.history.push(thisEvent);
+    };
+
+    const saveStopSellingEvent = (err, event) => {
+      const thisEvent = {
+        title: event.event.replace('Log','').replace(/([A-Z]+)/g, ' $1').trim(),
+        sender: event.args.sender,
+        forSale: false,
+        blockNumber: event.blockNumber
+      };
+      $scope.history.push(thisEvent);
+    };
+
+    const saveStartSellingEvent = (err, event) => {
+      const thisEvent = {
+        title: event.event.replace('Log','').replace(/([A-Z]+)/g, ' $1').trim(),
+        sender: event.args.sender,
+        forSale: true,
+        blockNumber: event.blockNumber
+      };
+      $scope.history.push(thisEvent);
     };
 
     const saveUpdateEvent = (err, event) => {
-      console.log(event);
       const thisEvent = {
-        title: event.event.replace('Log',''),
+        title: event.event.replace('Log','').replace(/([A-Z]+)/g, ' $1').trim(),
         sender: event.args.sender,
         forSale: event.args.isForSale,
         price: parseInt(event.args.housePrice.toString(10)),

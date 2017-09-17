@@ -49,13 +49,27 @@
               Updated At: {{event.blockNumber}}
             </p>
           </div>
-          <div ng-if="event.title == 'UpdatedHouse'">
+          <div ng-if="event.title == 'Updated House'">
             <span class="title">{{event.title}}</span>
             <p>Requested by: {{event.sender}}<br/>
               Price: 
               <span ng-show="selectedCurrency == 'wei'">{{event.price}} Wei</span>
               <span ng-hide="selectedCurrency == 'wei'">{{event.priceInEth}} Ether</span></br>
               For Sale: {{event.forSale}}<br/>
+              Updated At: {{event.blockNumber}}
+            </p>
+          </div>
+          <div ng-if="event.title == 'Start Selling' || event.title == 'Stop Selling'">
+            <span class="title">{{event.title}}</span>
+            <p>Requested by: {{event.sender}}<br/>
+              For Sale: {{event.forSale}}<br/>
+              Updated At: {{event.blockNumber}}
+            </p>
+          </div>
+          <div ng-if="event.title == 'New Title Holder'">
+            <span class="title">{{event.title}}</span>
+            <p>Previous Owner: {{event.prev}}<br/>
+              New Owner: {{event.newOwner}}<br/>
               Updated At: {{event.blockNumber}}
             </p>
           </div>
